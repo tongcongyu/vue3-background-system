@@ -1,0 +1,12 @@
+@import "./common.scss";
+@import "./iview-plus-change.scss";
+body {
+    background: url("../image/medal-bg.jpg") no-repeat center center;
+    background-size: 100% 100%;
+}
+.modal-edit {
+    .ivu-modal-body {
+        background: url("@/assets/image/medal-bg.jpg") no-repeat center center;
+        background-size: 100% 100%;
+    }
+}

@@ -1,18 +1,11 @@
 <!--
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
- * @Date: 2023-01-18 10:36:06
+ * @Date: 2023-01-18 17:33:41
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-01-18 17:36:51
- * @FilePath: \vue3-background-system\src\App.vue
+ * @LastEditTime: 2023-01-18 17:34:00
+ * @FilePath: \vue3-background-system\src\views\common\404Page.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
-  <router-view></router-view>
+  <div></div>
 </template>
-<script setup lang="ts">
-onMounted(() => {
-  let a = 1;
-  a += 1;
-  console.log(a);
-});
-</script>

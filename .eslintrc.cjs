@@ -2,7 +2,7 @@
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
  * @Date: 2023-01-18 14:40:21
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-01-18 16:08:52
+ * @LastEditTime: 2023-01-18 17:28:50
  * @FilePath: \vue3-background-system\.eslintrc.cjs
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -167,8 +167,9 @@ module.exports = {
     ],
     'no-use-before-define': 'off',
     'vue/require-slots-as-functions': 'error',
+    // 是否开启组件名多单词
     'vue/multi-word-component-names': [
-      'error',
+      'off',
       {
         ignores: ['index'],
       },
