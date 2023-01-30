@@ -2,7 +2,7 @@
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
  * @Date: 2023-01-19 09:15:53
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-01-30 15:03:00
+ * @LastEditTime: 2023-01-30 15:52:04
  * @FilePath: \vue3-background-system\src\views\login\login.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -11,32 +11,32 @@
     <div class="ligon-box">
       <Form :model="loginModel" ref="loginForm" :rules="rules">
         <FormItem label="" prop="username">
-          <!-- <Input
+          <Input
             v-model="loginModel.username"
             prefix="ios-person"
             placeholder="请输入用户名"
             style="width: 100%"
             @on-enter="handleSubmit"
-          /> -->
+          />
         </FormItem>
         <FormItem label="" prop="password">
-          <!-- <Input
+          <Input
             type="password"
             v-model="loginModel.password"
             prefix="ios-lock-outline"
             placeholder="请输入密码"
             style="width: 100%"
             @on-enter="handleSubmit"
-          /> -->
+          />
         </FormItem>
         <FormItem label="" prop="vCode">
           <!-- <FormItem label=""> -->
-          <!-- <Input
+          <Input
             v-model="loginModel.vCode"
             placeholder="请输入验证码，不区分大小写"
             style="width: 50%"
             @on-enter="handleSubmit"
-          /> -->
+          />
           <div class="yzm">
             <picyzm ref="refpicyzm"></picyzm>
           </div>
