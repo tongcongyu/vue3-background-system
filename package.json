@@ -2,6 +2,7 @@
   "name": "vue3-background-system",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev vite serve  --open",
     "build": "cross-env NODE_ENV=production vite build --mode build",
