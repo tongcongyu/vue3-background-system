@@ -182,7 +182,12 @@ module.exports = {
     'selector-pseudo-class-case': 'lower',
 
     // 禁止使用未知的伪类选择器
-    'selector-pseudo-class-no-unknown': true,
+    'selector-pseudo-class-no-unknown': [
+      true,
+      {
+        ignorePseudoClasses: ['/^/', 'string'],
+      },
+    ],
 
     // 在伪类选择器的括号内要求禁止有空白(试用)
     'selector-pseudo-class-parentheses-space-inside': 'never',
@@ -204,7 +209,7 @@ module.exports = {
     'selector-type-no-unknown': true,
 
     // 指定字符串使用双引号
-    'string-quotes': 'double',
+    'string-quotes': 'single',
 
     // 指定单位的大小写
     'unit-case': 'lower',

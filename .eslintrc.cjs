@@ -2,7 +2,7 @@
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
  * @Date: 2023-01-18 14:40:21
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-01-18 17:28:50
+ * @LastEditTime: 2023-01-30 15:07:03
  * @FilePath: \vue3-background-system\.eslintrc.cjs
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -140,11 +140,12 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/prefer-default-export': 'off',
     'max-classes-per-file': 'off',
+    // 不允许修改参数
     'no-param-reassign': [
       'error',
       {
         props: true,
-        ignorePropertyModificationsFor: ['state', 'acc', 'e', 'el', 'item'],
+        ignorePropertyModificationsFor: ['state', 'e', 'el', 'item', 'config'],
       },
     ],
     // 禁用一元操作符 ++ 和 --
@@ -181,7 +182,7 @@ module.exports = {
       },
     ], // 规定vue文件tags顺序
     'vue/valid-template-root': 'error', // template只允许一个root
-
+    '@typescript-eslint/ban-ts-comment': 'off', //允许使用
     '@typescript-eslint/ban-types': [
       'error',
       {
@@ -201,7 +202,15 @@ module.exports = {
     ],
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-shadow': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true, varsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      {
+        ignoreRestSiblings: true,
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
+      },
+    ],
     '@typescript-eslint/no-use-before-define': ['error', { classes: true, functions: false, typedefs: false }],
   },
   overrides: [

@@ -2,28 +2,45 @@
   "name": "vue3-background-system",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "dev": "cross-env NODE_ENV=dev vite serve  --open",
+    "build": "cross-env NODE_ENV=production vite build --mode build",
+    "test": "cross-env NODE_ENV=test vite build --mode test",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
     "format": "prettier --write \"./**/*.{html,vue,ts,js,json,md}\"",
     "lint:style": "stylelint \"./**/*.{css,less,vue,html}\" --fix",
     "prepare": "husky install"
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "dependencies": {
     "@types/node": "^18.11.18",
+    "@types/nprogress": "^0.2.0",
+    "@vueuse/integrations": "^9.11.0",
+    "axios": "^1.2.3",
+    "cross-env": "^7.0.3",
+    "echarts": "^5.4.1",
     "eslint-plugin-import": "^2.27.5",
+    "js-cookie": "^3.0.1",
+    "lodash-es": "^4.17.21",
     "mockjs": "^1.1.0",
+    "nprogress": "^0.2.0",
     "path": "^0.12.7",
+    "pinia": "^2.0.29",
     "postcss-px-to-viewport": "^1.1.1",
     "unplugin-auto-import": "^0.12.1",
+    "view-ui-plus": "^1.3.1",
     "vite-plugin-mock": "^2.9.6",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "@vitejs/plugin-vue": "^4.0.0",

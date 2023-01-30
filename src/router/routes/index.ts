@@ -28,11 +28,11 @@ Object.keys(modules).forEach((key) => {
 });
 
 // 根目录
-const rootRoute: RouteRecordRaw = {
-  path: '/',
-  name: 'root',
-  redirect: '/home',
-};
+// const rootRoute: RouteRecordRaw = {
+// //   path: '/',
+// //   name: 'root',
+// //   redirect: '/home',
+// };
 
 // 404页面
 const notFoundPage: RouteRecordRaw = {
@@ -43,4 +43,4 @@ const notFoundPage: RouteRecordRaw = {
   component: () => import('@/views/common/404Page.vue'),
 };
 
-export default [rootRoute, ...routes, notFoundPage];
+export default [...routes, notFoundPage];
