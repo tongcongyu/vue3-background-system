@@ -2,7 +2,7 @@
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
  * @Date: 2023-01-19 15:29:04
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-01-19 17:19:26
+ * @LastEditTime: 2023-01-31 09:55:11
  * @FilePath: \vue3-background-system\src\utils\http\axios.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -10,9 +10,11 @@ import VueCookie from 'js-cookie';
 import Axios, { AxiosError, AxiosResponse } from 'axios';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-const BASE_URL = 'https://10.10.130.196:8087';
+import { httpUrl, isMock } from '@/request/url';
+const env = import.meta.env.MODE;
+console.log('当前环境：', env);
+const BASE_URL = isMock ? httpUrl.test.base_url : httpUrl[env].base_url;
 const TIME_OUT = 30 * 1000;
-
 export interface AxiosResponseData {
   data: any;
   status?: string;

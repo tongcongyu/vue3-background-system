@@ -14,6 +14,8 @@ const setOption = ref<any>({
   fontSizeMax: 30, // 字体最大值
 });
 const identifyCode = ref<Array<string>>([]);
+// 子组件defineEmits暴露事件
+const emit = defineEmits(['getIdentifyCode']);
 watch(
   () => identifyCode.value,
   () => {
@@ -86,6 +88,8 @@ function randomVC() {
     arr[index] = t;
   }
   identifyCode.value = arr.slice(0, 4);
+  //   子组件给父组件传值
+  emit('getIdentifyCode', identifyCode.value);
 }
 function drawPic() {
   let canvas: any = document.getElementById('s-canvas');

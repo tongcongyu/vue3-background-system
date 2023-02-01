@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=dev vite serve  --open",
     "build": "cross-env NODE_ENV=production vite build --mode build",
-    "test": "cross-env NODE_ENV=test vite build --mode test",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
     "format": "prettier --write \"./**/*.{html,vue,ts,js,json,md}\"",

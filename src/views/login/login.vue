@@ -2,7 +2,7 @@
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
  * @Date: 2023-01-19 09:15:53
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-01-30 15:52:04
+ * @LastEditTime: 2023-02-01 09:12:59
  * @FilePath: \vue3-background-system\src\views\login\login.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -29,8 +29,8 @@
             @on-enter="handleSubmit"
           />
         </FormItem>
-        <FormItem label="" prop="vCode">
-          <!-- <FormItem label=""> -->
+        <!-- <FormItem label="" prop="vCode"> -->
+        <FormItem label="">
           <Input
             v-model="loginModel.vCode"
             placeholder="请输入验证码，不区分大小写"
@@ -38,7 +38,7 @@
             @on-enter="handleSubmit"
           />
           <div class="yzm">
-            <picyzm ref="refpicyzm"></picyzm>
+            <picyzm @getIdentifyCode="getIdentifyCode"></picyzm>
           </div>
         </FormItem>
       </Form>
@@ -51,15 +51,18 @@
 </template>
 <script setup lang="ts">
 import VueCookie from 'js-cookie';
-import { login } from '@/request/login';
+import { usePost } from '@/utils/http/axios';
 import picyzm from './picyzm.vue';
+/**
+ * 路由,const $router = useRouter();
+ */
+const $router = useRouter();
 interface IloginModeltype {
   username: string;
   password: string;
   vCode: string;
 }
 const loginForm = ref<any>(null);
-const refpicyzm = ref<any>(null);
 const rememberUser = ref<boolean>(false);
 const loading = ref<boolean>(false);
 const loginModel = ref<IloginModeltype>({
@@ -67,13 +70,12 @@ const loginModel = ref<IloginModeltype>({
   password: '',
   vCode: '',
 });
+const identifyCode = ref<string>('');
 function validatePass(rule, value, callback) {
   if (!value) {
     callback(new Error('请输入验证码'));
   } else {
-    const yzmTrue = refpicyzm.value.identifyCode.join('').toLowerCase();
-    console.log(yzmTrue, 'pppp');
-    if (value.toLowerCase() != yzmTrue) {
+    if (value.toLowerCase() != identifyCode.value) {
       callback(new Error('验证码错误'));
     }
     callback();
@@ -86,13 +88,17 @@ const rules = ref<any>({
 });
 onMounted(() => {
   VueCookie.remove('X-ACCESS-TOKEN');
-  const loginModel: any = sessionStorage.getItem('loginModel');
-  if (loginModel) {
-    loginModel.value = JSON.parse(loginModel);
+  const rememberData: any = sessionStorage.getItem('loginModel');
+  if (rememberData) {
+    loginModel.value = JSON.parse(rememberData);
     rememberUser.value = true;
   }
 });
-
+// 获取验证码组建的验证码用于判断验证码是否正确
+function getIdentifyCode(value: Array<string | number>) {
+  identifyCode.value = value.join('').toLowerCase();
+}
+//提交验证
 function handleSubmit() {
   loginForm.value.validate((valid) => {
     if (valid) {
@@ -100,11 +106,11 @@ function handleSubmit() {
     }
   });
 }
+// 发送登录请求
 function save() {
   loading.value = true;
-  login(loginModel.value).then(
+  usePost('/login', loginModel.value).then(
     (res: any) => {
-      console.log(res, 'pppp');
       if (res.code == 0) {
         if (rememberUser.value) {
           const userPwd = {
@@ -114,13 +120,15 @@ function save() {
           sessionStorage.setItem('loginModel', JSON.stringify(userPwd));
         }
         VueCookie.set('X-ACCESS-TOKEN', res.data, -1);
-        // $router.push('/main/mainIndex');
+        loginForm.value.resetFields();
+        $router.push('/main/mainIndex');
       } else {
-        // this.$Message.error('账号密码错误');
+        window.$message.error('账号密码错误');
       }
       loading.value = false;
     },
     (_err) => {
+      window.$message.error('登陆失败！');
       loading.value = false;
     }
   );
