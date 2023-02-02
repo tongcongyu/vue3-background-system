@@ -21,21 +21,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-const prop = defineProps<{
+defineProps<{
   actions: any;
   click: any;
   data: any;
 }>();
-
-watch(
-  () => prop.actions,
-  () => {
-    alert(1);
-  },
-  {
-    deep: true,
-  }
-);
 </script>
 <style lang="scss" scoped>
 .cs-button {
