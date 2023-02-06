@@ -1,6 +1,6 @@
 <template>
   <div class="table-form">
-    <Form :model="model" ref="refMenuForm" :rules="rules" :label-width="120">
+    <Form :model="model" ref="refMenuForm" :rules="rules" :label-width="80">
       <Row :gutter="10">
         <Col span="24">
           <Form-item label="菜单名称" prop="name">
@@ -39,7 +39,6 @@
                 v-model="model.parentId"
                 show-checkbox
                 :data="options"
-                v-width="400"
                 :disabled="modelDisabled || parentDisabled"
               />
             </div>

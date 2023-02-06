@@ -2,32 +2,31 @@
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
  * @Date: 2023-02-01 10:57:29
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-02-01 17:09:00
+ * @LastEditTime: 2023-02-06 15:22:33
  * @FilePath: \vue3-background-system\src\views\system\menu\menu.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div class="oo-page">
-    <div class="oo-server">
-      <div class="i-table">
-        <Row class="i-table-top-btns">
-          <Button type="primary" icon="md-add" @click="clickEvent('save', 0)">增加</Button>
-        </Row>
-        <Table row-key="id" :columns="columns" :data="allMenuList" border></Table>
-      </div>
-      <Modal v-model="smsModal" :title="title[action]" :width="40" @on-cancel="closeModal">
-        <menu-form
-          @close-modal="closeModal"
-          @getAllMenu="getAllMenu"
-          :allMenuList="allMenuList"
-          :formModel="model"
-          :action="action"
-        ></menu-form>
-        <template #footer>
-          <span></span>
-        </template>
-      </Modal>
+    <!-- <div class="i-table">
+      <Row class="i-table-top-btns">
+        <Button type="primary" icon="md-add" @click="clickEvent('save', 0)">增加</Button>
+      </Row>
+      <Table row-key="id" :columns="columns" :data="allMenuList" border></Table>
     </div>
+    <Modal v-model="smsModal" :title="title[action]" :width="40" @on-cancel="closeModal">
+      <menu-form
+        @close-modal="closeModal"
+        @getAllMenu="getAllMenu"
+        :allMenuList="allMenuList"
+        :formModel="model"
+        :action="action"
+      ></menu-form>
+      <template #footer>
+        <span></span>
+      </template>
+    </Modal> -->
+    <CsDynamicTable :propData="csTable" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -98,6 +97,49 @@ const columns = ref<Array<any>>([
     },
   },
 ]);
+
+const csTable = ref<any>({
+  actionList: {
+    //表头操作按钮
+    replace: true,
+    def: [
+      {
+        name: '增加',
+        icon: 'ios-add',
+        type: 'primary',
+        action: () => {},
+      },
+      {
+        name: '删除',
+        icon: 'md-trash',
+        type: 'error',
+        action: () => {},
+      },
+    ],
+  },
+  search: {
+    show: false,
+    key: 'gatewayId',
+    placeholder: '请输入名称',
+  },
+  advanceSearch: [
+    {
+      type: 'input',
+      key: 'id',
+      placeholder: '请输入名称',
+    },
+    {
+      type: 'select',
+      option: [
+        { value: 1, label: '11' },
+        { value: 2, label: '22' },
+      ],
+      key: 'name',
+      multiple: true,
+      placeholder: '请输入名称',
+    },
+  ],
+});
 onMounted(() => {
   getAllMenu();
 });
