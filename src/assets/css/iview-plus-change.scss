@@ -1,5 +1,17 @@
-$head-light-color: #2d8cf0;
+$head-light-color: #162947;
+$body-light-color: #162947;
 $input-select-bg: #fff;
+$button-primary-color: #2c81da;
+// 按钮样式
+.ivu-btn-text:hover {
+  background-color: transparent;
+}
+.ivu-btn-ghost.ivu-btn-primary {
+  color: $button-primary-color;
+}
+.ivu-btn-ghost.ivu-btn-primary:hover {
+  background-color: transparent !important;
+}
 // 弹窗样式
 .ivu-modal-wrap {
   .ivu-modal {
@@ -8,22 +20,29 @@ $input-select-bg: #fff;
       .ivu-modal-header {
         background: $head-light-color;
         .ivu-modal-header-inner {
-          text-align: center;
+          text-align: left;
+          color: #bccfde;
         }
       }
       .ivu-modal-body {
-        padding: 30px 30px 0 !important;
+        padding: 10px 25px !important;
+        background: $body-light-color;
       }
     }
   }
 }
-// 输入框样式
+/*
+ *输入框样式
+*/
 // .ivu-input {
 //   background: #1d3655;
 //   border: 0;
 //   color: #a5abbb;
 // }
-// 下拉框
+
+/*
+ *下拉框
+*/
 .ivu-select {
   color: #b5b9c9;
   .ivu-select-selection {
@@ -57,38 +76,54 @@ $input-select-bg: #fff;
   }
 }
 
+/*
+ *表格样式
+*/
 .ivu-table {
-  background: none;
-  color: #b5b9c9;
-}
+  background-color: transparent !important;
+  color: #b5b9c9 !important;
 
-// 表格样式
-.ivu-table th {
-  background: #1d3251;
-  color: #000;
-  border-right: 1px solid #28446b;
-  height: 48px !important;
+  &:before{
+    display: none;
+  }
 }
 .ivu-table td {
-  background: #162947;
-}
+    border-bottom:none !important;
+    background-color: #274859 !important;
+    .ivu-table th {
+      border-bottom: none;
+    }
+  }
+.ivu-table th {
+    background-color: #21437a !important;
+    color: #fff;
+    border-right: 1px solid #365280;
+    height: 40px !important;
+    border-bottom:none !important;
+    .ivu-table-cell {
+        padding: 0;
+    }
+  }
+// 斑马纹颜色
 .ivu-table-stripe .ivu-table-body tr:nth-child(2n) td,
 .ivu-table-stripe .ivu-table-fixed-body tr:nth-child(2n) td {
-  background: #1d3251;
+  background-color: #274859 !important;
 }
-.ivu-table td,
-.ivu-table th {
-  border-bottom: none;
+.ivu-table-stripe .ivu-table-body tr:nth-child(2n-1) td,
+.ivu-table-stripe .ivu-table-fixed-body tr:nth-child(2n-1) td {
+  background-color: #2d3d60 !important;
 }
 .ivu-table-row-hover td {
-  background: #1e395e !important;
+  background-color: #2d3d60 !important;
 }
 .ivu-table-row a:hover {
   outline: 0;
   text-decoration: underline !important;
 }
 
-// 多选框
+/*
+ *多选框
+*/
 .ivu-checkbox-wrapper {
   margin-right: 0px;
 }
@@ -97,7 +132,7 @@ $input-select-bg: #fff;
 }
 .ivu-checkbox-group-item {
   color: #b5bbc9;
-  border: 1px solid #315280;
+//   border: 1px solid #315280;
   border-radius: 0;
 }
 .ivu-checkbox-wrapper-checked {

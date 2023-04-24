@@ -1,13 +1,13 @@
 /**
  * 是否开启mock数据
  */
-const isMock = true;
+const isMock = false;
 /**
  * 接口i请求地址
  */
 const httpUrl = {
   development: {
-    base_url: 'https://10.10.130.196:8087',
+    base_url: 'http://10.10.132.231:8848',
   },
   production: {
     base_url: window.origin,

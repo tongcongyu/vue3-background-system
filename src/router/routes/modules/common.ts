@@ -18,36 +18,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/login/login.vue'),
-  },
-  {
-    path: '/ceshi',
-    name: 'ceshi',
-    component: () => import('@/views/ceshi/ceshi.vue'),
-  },
-  {
-    path: '/main',
-    name: 'main',
-    component: () => import('@/views/main/main.vue'),
-    children: [
-      {
-        path: 'mainIndex',
-        name: 'mainIndex',
-        component: () => import('@/views/mainIndex/index.vue'),
-      },
-    ],
-  },
-  {
-    path: '/system',
-    name: 'system',
-    component: () => import('@/views/main/main.vue'),
-    children: [
-      {
-        path: 'menu',
-        name: 'menu',
-        component: () => import('@/views/system/menu/menu.vue'),
-      },
-    ],
+    component: () => import('@/views/mainIndex/index.vue'),
   },
 ];
 

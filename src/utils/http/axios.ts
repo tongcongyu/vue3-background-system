@@ -60,6 +60,7 @@ const errorHandle = (status: number, error): void => {
 // 请求拦截器
 instance.interceptors.request.use(
   (config) => {
+    NProgress.start();
     // 可以处理token等
     const token = VueCookie.get(tokenHeaderName);
     if (token) {
@@ -68,8 +69,9 @@ instance.interceptors.request.use(
     return config;
   },
   (err) => {
+    NProgress.done();
     return Promise.reject(err);
-  }
+  },
 );
 
 // 响应拦截器
@@ -78,16 +80,18 @@ instance.interceptors.response.use(
     VueCookie.set(tokenHeaderName, VueCookie.get(tokenHeaderName), {
       expires: 1 / 48,
     });
+    NProgress.done();
     return res.data;
   },
-  (error: AxiosError) => {
-    console.error(error, '出错了出错了....');
-    if (error && error.response) {
-      errorHandle(error.response.status, error.response);
-      return Promise.reject(error.response);
-    }
-    return Promise.reject(error);
-  }
+    (error: AxiosError) => {
+      console.error(error, '出错了出错了....');
+      NProgress.done();
+      if (error && error.response) {
+        errorHandle(error.response.status, error.response);
+        return Promise.reject(error.response);
+      }
+      return Promise.reject(error);
+    },
 );
 /**
  * GET 请求
@@ -96,15 +100,12 @@ instance.interceptors.response.use(
  */
 const useGet = (url: string, params?: any) => {
   return new Promise((resolve, reject) => {
-    NProgress.start();
     instance
       .get(BASE_URL + url, params)
       .then((res) => {
-        NProgress.done();
         resolve(res);
       })
       .catch((err) => {
-        NProgress.done();
         reject(err);
       });
   });
@@ -116,15 +117,12 @@ const useGet = (url: string, params?: any) => {
  */
 const usePost = (url: string, params?: any) => {
   return new Promise((resolve, reject) => {
-    NProgress.start();
     instance
       .post(BASE_URL + url, params)
       .then((res) => {
-        NProgress.done();
         resolve(res);
       })
       .catch((err) => {
-        NProgress.done();
         reject(err);
       });
   });
@@ -136,15 +134,12 @@ const usePost = (url: string, params?: any) => {
  */
 const usePut = (url: string, params?: any) => {
   return new Promise((resolve, reject) => {
-    NProgress.start();
     instance
       .post(BASE_URL + url, params)
       .then((res) => {
-        NProgress.done();
         resolve(res);
       })
       .catch((err) => {
-        NProgress.done();
         reject(err);
       });
   });
@@ -156,15 +151,12 @@ const usePut = (url: string, params?: any) => {
  */
 const useDelete = (url: string, params?: any) => {
   return new Promise((resolve, reject) => {
-    NProgress.start();
     instance
       .post(BASE_URL + url, params)
       .then((res) => {
-        NProgress.done();
         resolve(res);
       })
       .catch((err) => {
-        NProgress.done();
         reject(err);
       });
   });
