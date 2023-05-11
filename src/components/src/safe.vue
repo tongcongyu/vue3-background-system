@@ -1,5 +1,5 @@
 <template>
-  <div class="safe" :style="`height:${8.5 * uSite}px`">
+  <div class="safe" :style="`height:${15 * uSite}px;margin:${1.5 * uSite}px 0`">
     <div v-for="item in uSite" :key="item" class="row">
       <div>
         <div v-for="li in 6" :key="li"></div>
@@ -25,7 +25,7 @@ withDefaults(
 <style lang="scss" scoped>
 .safe {
   width: 100px;
-  //   height: 8.5px;
+  //   height: 15px;
   position: relative;
   background: #676f72;
   display: flex;
@@ -34,7 +34,7 @@ withDefaults(
   gap: 1px;
   .row {
     width: 100%;
-    height: 8.5px;
+    height: 15px;
     display: flex;
     > div:nth-of-type(1) {
       width: 40%;

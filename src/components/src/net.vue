@@ -1,5 +1,5 @@
 <template>
-  <div class="net" :style="`height:${8.5 * uSite}px`">
+  <div class="net" :style="`height:${15 * uSite}px;margin:${1.5 * uSite}px 0`">
     <div>
       <div :style="`height:${3 * uSite}px`"></div>
     </div>
@@ -25,7 +25,7 @@ withDefaults(
 <style lang="scss" scoped>
 .net {
   width: 100px;
-  //   height: 8.5px;
+  //   height: 15px;
   display: flex;
   position: relative;
   background: #676f72;

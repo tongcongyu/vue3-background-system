@@ -1,5 +1,5 @@
 <template>
-  <div class="other" :style="`height:${8.5 * uSite}px`">
+  <div class="other" :style="`height:${15 * uSite}px;margin:${1.5 * uSite}px 0`">
     <div></div>
   </div>
 </template>

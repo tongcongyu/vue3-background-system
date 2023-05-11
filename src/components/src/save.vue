@@ -1,5 +1,5 @@
 <template>
-  <div class="save" :style="`height:${8.5 * uSite}px`">
+  <div class="save" :style="`height:${15 * uSite}px;margin:${1.5 * uSite}px 0`">
     <div v-for="item in 4" :key="item">
       <div>
         <div v-for="li in uSite" :key="li"></div>
@@ -21,7 +21,7 @@ withDefaults(
 <style lang="scss" scoped>
 .save {
   width: 100px;
-  //   height: 8.5px;
+  //   height: 15px;
   border: 2px solid #545c5e;
   display: flex;
   position: relative;

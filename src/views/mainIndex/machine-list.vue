@@ -2,7 +2,7 @@
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
  * @Date: 2023-04-13 16:35:05
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-04-23 16:26:58
+ * @LastEditTime: 2023-05-11 17:46:34
  * @FilePath: \四川省GA厅NCMS机房可视化\src\views\mainIndex\machine-list.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -14,8 +14,32 @@
         <img :src="getImg(item.icon)" alt="" />
       </div>
     </div>
+    <div class="tool-bar">
+      <div>比例缩放：</div>
+      <Tooltip content="放大">
+        <Button
+          type="primary"
+          size="small"
+          shape="circle"
+          icon="md-add"
+          @click="changeZoom('add')"
+          :disabled="zoomValue > 3"
+        ></Button>
+      </Tooltip>
+      <Tooltip content="缩小">
+        <Button
+          type="primary"
+          size="small"
+          shape="circle"
+          icon="md-remove"
+          @click="changeZoom('remove')"
+          :disabled="zoomValue <= 0.5"
+        ></Button>
+      </Tooltip>
+      <Trend :flag="zoomValue < 1 ? 'down' : 'up'">X{{ zoomValue.toFixed(1) }}</Trend>
+    </div>
     <div class="list-bottom">
-      <div v-for="(li, idx) in machineList" :key="idx">
+      <div v-for="(li, idx) in machineList" :key="idx" :style="`zoom:${zoomValue}`">
         <MachineBox :boxValue="li" @show-details="showDetails(li)"></MachineBox>
       </div>
     </div>
@@ -35,7 +59,8 @@ interface IlegendList {
 const props = defineProps<{
   racksList: any;
 }>();
-const refMachineDetail=ref<any>(null)
+const zoomValue = ref<number>(1);
+const refMachineDetail = ref<any>(null);
 const detailModal = ref<boolean>(false);
 const nowBox = ref<any>({});
 const legendList = ref<Array<IlegendList>>([
@@ -59,6 +84,10 @@ const legendList = ref<Array<IlegendList>>([
     name: '其他设备',
     icon: 'other',
   },
+  {
+    name: '配线',
+    icon: 'peixian',
+  },
 ]);
 const machineList = ref<any>([]);
 function getImg(name: string) {
@@ -68,7 +97,14 @@ function showDetails(params: any) {
   nowBox.value = { ...params };
   nowBox.value.name = '';
   detailModal.value = true;
-  refMachineDetail.value.initData(params.rackNo)
+  refMachineDetail.value.initData(params.rackNo);
+}
+function changeZoom(type: string) {
+  if (type === 'add') {
+    zoomValue.value += 0.1;
+  } else {
+    zoomValue.value -= 0.1;
+  }
 }
 watch(
   () => props.racksList,
@@ -131,26 +167,32 @@ watch(
         max-width: 100px;
       }
       img {
-        max-width: 116px;
+        max-width: 90px;
         height: 16px;
         margin: 0 20px;
       }
     }
   }
+  .tool-bar {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #fff;
+    gap: 10px;
+  }
   .list-bottom {
     max-width: 100%;
-    margin-top: 11px;
+    // margin-top: 11px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    gap: 15px;
     > div {
-      width: 15%;
-      min-height: 420px;
-        // height: 420px;
+      width: 185px;
+      height: 830px;
+      //   zoom: 1; //缩放
       background: #273859;
-      padding-bottom: 10px;
-      margin-right: 15px;
-      margin-bottom: 10px;
     }
   }
 }
