@@ -2,7 +2,7 @@
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
  * @Date: 2023-04-13 16:35:05
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-05-17 11:07:20
+ * @LastEditTime: 2023-05-17 14:12:29
  * @FilePath: \四川省GA厅NCMS机房可视化\src\views\mainIndex\machine-list.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -68,10 +68,6 @@ const legendList = ref<Array<IlegendList>>([
     name: '交换机',
     icon: 'server',
   },
-  //   {
-  //     name: '存储',
-  //     icon: 'save',
-  //   },
   {
     name: '路由器',
     icon: 'net',

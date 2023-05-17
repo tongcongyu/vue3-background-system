@@ -2,7 +2,7 @@
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
  * @Date: 2023-04-17 11:46:43
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-05-17 10:54:13
+ * @LastEditTime: 2023-05-17 14:11:15
  * @FilePath: \四川省GA厅NCMS机房可视化\src\views\mainIndex\machine-box.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -15,10 +15,10 @@
           <div class="site">{{ el.site[0] }}</div>
           <Poptip trigger="hover" placement="right-end" :disabled="!showToolTip || !el.info" word-wrap>
             <server :uSite="el.site.length" v-if="typeList[el.typeId] === 'server'"></server>
-            <!-- <save :uSite="el.site.length" v-else-if="typeList[el.typeId] === 'save'"></save> -->
             <net :uSite="el.site.length" v-else-if="typeList[el.typeId] === 'net'"></net>
             <safe :uSite="el.site.length" v-else-if="typeList[el.typeId] === 'safe'"></safe>
             <other :uSite="el.site.length" v-else-if="typeList[el.typeId] === 'other'"></other>
+            <save :uSite="el.site.length" v-else-if="typeList[el.typeId] === 'peixian'"></save>
             <div class="empty-box" v-else></div>
             <template #content v-if="el.info">
               <div style="width: 500px; max-height: 500px; overflow-y: auto; overflow-x: hidden">
@@ -48,13 +48,12 @@ defineProps<{
 /**
  * empty:无设备
  * server：交换机
-//  * save：存储 已删除
  * net：路由器
  * safe：安全设备
  * other：其他
  * peixian:配线架
  */
-const typeList = ref<any>(['empty', 'server', 'net', 'safe', 'other', '配线架']);
+const typeList = ref<any>(['empty', 'server', 'net', 'safe', 'other', 'peixian']);
 const emit = defineEmits(['show-details']);
 function showDetails(params) {
   if (params.list.length > 0) {
