@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev vite serve  --open",
-    "build": "cross-env NODE_ENV=production vite build --mode build",
+    "dev": "cross-env VITE_ENV_TYPE=dev vite serve  --open",
+    "build": "cross-env VITE_ENV_TYPE=prod vite build --mode build",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
     "format": "prettier --write \"./**/*.{html,vue,ts,js,json,md}\"",

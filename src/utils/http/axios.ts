@@ -2,7 +2,7 @@
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
  * @Date: 2023-01-19 15:29:04
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-01-31 09:55:11
+ * @LastEditTime: 2023-05-17 15:58:00
  * @FilePath: \vue3-background-system\src\utils\http\axios.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -11,9 +11,9 @@ import Axios, { AxiosError, AxiosResponse } from 'axios';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { httpUrl, isMock } from '@/request/url';
-const env = import.meta.env.MODE;
+const env = import.meta.env.VITE_ENV_TYPE;
 console.log('当前环境：', env);
-const BASE_URL = isMock ? httpUrl.test.base_url : httpUrl[env].base_url;
+const BASE_URL = isMock ? httpUrl.test.base_url : httpUrl[env as keyof typeof httpUrl].base_url;
 const TIME_OUT = 30 * 1000;
 export interface AxiosResponseData {
   data: any;
@@ -71,7 +71,7 @@ instance.interceptors.request.use(
   (err) => {
     NProgress.done();
     return Promise.reject(err);
-  },
+  }
 );
 
 // 响应拦截器
@@ -83,15 +83,15 @@ instance.interceptors.response.use(
     NProgress.done();
     return res.data;
   },
-    (error: AxiosError) => {
-      console.error(error, '出错了出错了....');
-      NProgress.done();
-      if (error && error.response) {
-        errorHandle(error.response.status, error.response);
-        return Promise.reject(error.response);
-      }
-      return Promise.reject(error);
-    },
+  (error: AxiosError) => {
+    console.error(error, '出错了出错了....');
+    NProgress.done();
+    if (error && error.response) {
+      errorHandle(error.response.status, error.response);
+      return Promise.reject(error.response);
+    }
+    return Promise.reject(error);
+  }
 );
 /**
  * GET 请求
