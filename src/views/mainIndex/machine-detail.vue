@@ -2,14 +2,14 @@
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
  * @Date: 2023-04-13 17:36:43
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-04-21 13:03:25
- * @FilePath: \四川省GA厅NCMS机房可视化\src\views\mainIndex\machine-detail.vue
+ * @LastEditT i me: 2023-05-15 10:51:50
+     * @FilePath: \四川省GA厅NCMS机房可视化\src\views\mainIndex\machine-detail.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div class="machine-detail">
     <div class="detail-left">
-      <MachineBox :boxValue="nowBox" @show-details="null"></MachineBox>
+      <MachineBox :boxValue="nowBox" @show-details="null" :showToolTip="true"></MachineBox>
     </div>
     <div class="detail-right">
       <div class="right-top">
@@ -31,64 +31,80 @@
           <div class="table-name">资产信息</div>
           <Button type="primary" ghost icon="ios-build" @click="showMenuRow">定制列</Button>
         </div>
-        <div v-if="showMenu" class="show-menu">
-          <CheckboxGroup v-model="checkMenu" @on-change="changeMenuList">
-            <Checkbox :label="item.label" v-for="(item, index) of menuList" :key="index"> </Checkbox>
-          </CheckboxGroup>
-        </div>
         <div class="table-box" :style="`height:calc(100% - ${showMenu ? 150 : 50}px)`">
           <Table :columns="columns" :data="tableData" stripe></Table>
         </div>
       </div>
     </div>
+    <Modal class="modal-page" title="定制列" width="35" v-model="showMenu" :mask-closable="true">
+      <dz-list ref="refDzList" @close-modal="showMenuRow" @init-data="initData"></dz-list>
+      <template #footer>
+        <div style="display: flex; justify-content: center">
+          <Button type="primary" @click="selectList">确定</Button>
+        </div>
+      </template>
+    </Modal>
   </div>
 </template>
 <script setup lang="ts">
-import { useGet, usePost } from '@/utils/http/axios';
+import { useGet } from '@/utils/http/axios';
 import MachineBox from './machine-box.vue';
-defineProps<{
+import DzList from './dz-list.vue';
+const prop = defineProps<{
   nowBox: any;
 }>();
 defineExpose({
-  initData,
+  getRackNo,
 });
+const refDzList = ref<any>(null);
 const tableInfo = ref<any>({});
 const showMenu = ref<boolean>(false);
-const allMenu = ref<any>({});
-const menuList = ref<
-  Array<{
-    label: string;
-    isCheck: number;
-  }>
->([]);
-const checkMenu = ref<Array<string>>([]);
 const columns = ref<any>([]);
+const rackNoStr = ref<any>('');
 const tableData = ref<any>([]);
+const tooltipList = ref<any>([]);
 
-function initData(rackNo: any) {
+function getRackNo(rackNo: any) {
+  rackNoStr.value = rackNo;
+  initData();
+}
+function initData() {
+  // 获取展示的定制列
+  columns.value = [];
+  tooltipList.value = [];
   useGet('/menu/all', {}).then((res: any) => {
-    if (res.data) {
-      allMenu.value = res.data;
-      const data: any = [];
-      checkMenu.value = [];
-
-      Object.keys(res.data).forEach((item: any) => {
-        const obj = {
-          label: item,
-          isCheck: res.data[item],
-        };
-        if (obj.isCheck === 1) {
-          checkMenu.value.push(item);
+    res.data.forEach((item: any) => {
+      item.fields.forEach((el: any) => {
+        if (el.display === 1) {
+          const obj: any = {
+            title: el.name,
+            key: el.name,
+            minWidth: 60,
+            ellipsis: true,
+            tooltip: true,
+            resizable: true,
+            align: 'center',
+          };
+          columns.value.push(obj);
+          tooltipList.value.push(el.name);
         }
-        data.push(obj);
       });
-      getColumns();
-      menuList.value = data;
-    }
+    });
   });
-  useGet('/visual/detailsByRackNo?rackNo=' + rackNo, {}).then((res: any) => {
+  //   获取表格数据
+  useGet('/visual/detailsByRackNo?rackNo=' + rackNoStr.value, {}).then((res: any) => {
     if (res.data) {
+      //   tableData.value = [...res.data.devList, ...res.data.devList, ...res.data.devList, ...res.data.devList];
       tableData.value = res.data.devList;
+      prop.nowBox.list.forEach((item: any) => {
+        tableData.value.forEach((el: any) => {
+          if (item.id && item.id === el.id) {
+            item.info = el;
+          }
+        });
+      });
+      // eslint-disable-next-line vue/no-mutating-props
+      prop.nowBox.tooltipList = tooltipList.value;
       tableInfo.value = {
         rackNo: res.data.rackNo,
         rowCol: res.data.rowCol,
@@ -101,51 +117,31 @@ function initData(rackNo: any) {
 function showMenuRow() {
   showMenu.value = !showMenu.value;
 }
-async function changeMenuList(params: any) {
-  for (let i in allMenu.value) {
-    if (params.indexOf(i) === -1) {
-      allMenu.value[i] = 0;
-    } else {
-      allMenu.value[i] = 1;
-    }
-  }
-  await usePost('/menu/update', allMenu.value).then((res: any) => {
-    if (res.data) {
-      getColumns();
-    }
-  });
-}
-
-function getColumns() {
-  columns.value = [];
-  checkMenu.value.forEach((li: any) => {
-    const columnsObj: any = {
-      title: li,
-      key: li,
-      minWidth: 60,
-      ellipsis: true,
-      tooltip: true,
-      resizable: true,
-      align: 'center',
-    };
-    columns.value.push(columnsObj);
-  });
+// function closeMenuRow() {
+//   showMenu.value = !showMenu.value;
+// }
+function selectList() {
+  const fnEditList: any = refDzList.value.editList;
+  fnEditList();
 }
 </script>
 <style lang="scss" scoped>
 .machine-detail {
   width: 100%;
-  max-height: 600px;
+  //   max-height: 600px;
   min-height: 420px;
   padding: 20px;
   display: flex;
   justify-content: space-between;
   .detail-left {
     width: 200px;
-    height: 'auto';
+    // height: 'auto';
     background: #273859;
     padding-bottom: 20px;
-    overflow-y: auto;
+    // overflow-y: auto;
+    > div {
+      zoom: 0.7;
+    }
   }
   .detail-right {
     width: calc(100% - 250px);
@@ -179,11 +175,6 @@ function getColumns() {
         .table-name {
           color: #1d79b9;
         }
-      }
-      .show-menu {
-        width: 100%;
-        height: 100px;
-        overflow-y: auto;
       }
       .table-box {
         // overflow-y: auto;

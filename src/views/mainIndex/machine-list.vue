@@ -2,7 +2,7 @@
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
  * @Date: 2023-04-13 16:35:05
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-05-11 17:46:34
+ * @LastEditTime: 2023-05-17 11:07:20
  * @FilePath: \四川省GA厅NCMS机房可视化\src\views\mainIndex\machine-list.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -40,7 +40,7 @@
     </div>
     <div class="list-bottom">
       <div v-for="(li, idx) in machineList" :key="idx" :style="`zoom:${zoomValue}`">
-        <MachineBox :boxValue="li" @show-details="showDetails(li)"></MachineBox>
+        <MachineBox :boxValue="li" @show-details="showDetails(li)" :showToolTip="false"></MachineBox>
       </div>
     </div>
     <Modal class="modal-page" title="设备详情" width="65" v-model="detailModal" :mask-closable="false" footer-hide>
@@ -65,15 +65,15 @@ const detailModal = ref<boolean>(false);
 const nowBox = ref<any>({});
 const legendList = ref<Array<IlegendList>>([
   {
-    name: '服务器',
+    name: '交换机',
     icon: 'server',
   },
+  //   {
+  //     name: '存储',
+  //     icon: 'save',
+  //   },
   {
-    name: '存储',
-    icon: 'save',
-  },
-  {
-    name: '网络',
+    name: '路由器',
     icon: 'net',
   },
   {
@@ -85,7 +85,7 @@ const legendList = ref<Array<IlegendList>>([
     icon: 'other',
   },
   {
-    name: '配线',
+    name: '配线架',
     icon: 'peixian',
   },
 ]);
@@ -97,7 +97,7 @@ function showDetails(params: any) {
   nowBox.value = { ...params };
   nowBox.value.name = '';
   detailModal.value = true;
-  refMachineDetail.value.initData(params.rackNo);
+  refMachineDetail.value.getRackNo(params.rackNo);
 }
 function changeZoom(type: string) {
   if (type === 'add') {
@@ -126,6 +126,7 @@ watch(
       for (let i = 1; i <= item.cabCount; i += 1) {
         if (numList.indexOf(i) === -1) {
           const siteObj = {
+            id: null,
             type: 0,
             site: [i],
           };
@@ -190,9 +191,10 @@ watch(
     gap: 15px;
     > div {
       width: 185px;
-      height: 830px;
+      height: 700px;
       //   zoom: 1; //缩放
       background: #273859;
+      overflow: auto;
     }
   }
 }

@@ -28,6 +28,9 @@ $button-primary-color: #2c81da;
         padding: 10px 25px !important;
         background: $body-light-color;
       }
+      .ivu-modal-footer{
+        background: $body-light-color;
+      }
     }
   }
 }
@@ -145,8 +148,14 @@ $button-primary-color: #2c81da;
   border-radius: 0 4px 4px 0;
 }
 
-// 文字提示框
+// 气泡提示框
 .ivu-poptip {
+    .ivu-poptip-rel{
+        display: block;
+    }
+    .ivu-form .ivu-form-item{
+        margin-bottom: 3px;
+    }
   .ivu-poptip-arrow:after {
     border-bottom-color: #1e3555 !important;
   }
@@ -160,7 +169,13 @@ $button-primary-color: #2c81da;
     }
   }
 }
+// 文字提示框
+.ivu-tooltip{
+    .ivu-tooltip-rel{
+        display:block
+    }
 
+}
 // 分页器
 .ivu-page {
   .ivu-page-disabled,
@@ -253,7 +268,7 @@ $button-primary-color: #2c81da;
     margin-right: 0;
   }
   .ivu-form-item-label {
-    color: #b5bbc9;
+    color: #fff !important;
   }
 }
 // 行内表单的单独设置

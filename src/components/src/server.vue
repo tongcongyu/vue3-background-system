@@ -2,12 +2,12 @@
  * @Author: H3C\tys4483 YS.tongcongyu@h3c.com
  * @Date: 2023-04-18 11:47:24
  * @LastEditors: H3C\tys4483 YS.tongcongyu@h3c.com
- * @LastEditTime: 2023-05-11 14:31:35
+ * @LastEditTime: 2023-05-15 10:26:40
  * @FilePath: \四川省GA厅NCMS机房可视化\src\components\src\server.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
-  <div class="server" :style="`height:${15 * uSite}px;margin:${1.5 * uSite}px 0`">
+  <div class="server" :style="`height:${13 * uSite}px;margin:${uSite - 1}px 0`">
     <div></div>
     <div></div>
     <div></div>

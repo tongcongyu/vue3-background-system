@@ -1,5 +1,5 @@
 <template>
-  <div class="save" :style="`height:${15 * uSite}px;margin:${1.5 * uSite}px 0`">
+  <div class="save" :style="`height:${13 * uSite}px;margin:${uSite - 1}px 0`">
     <div v-for="item in 4" :key="item">
       <div>
         <div v-for="li in uSite" :key="li"></div>

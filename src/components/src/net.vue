@@ -1,5 +1,5 @@
 <template>
-  <div class="net" :style="`height:${15 * uSite}px;margin:${1.5 * uSite}px 0`">
+  <div class="net" :style="`height:${13 * uSite}px;margin:${uSite - 1}px 0`">
     <div>
       <div :style="`height:${3 * uSite}px`"></div>
     </div>
