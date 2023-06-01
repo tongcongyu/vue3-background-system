@@ -32,7 +32,11 @@
           <Button type="primary" ghost icon="ios-build" @click="showMenuRow">定制列</Button>
         </div>
         <div class="table-box" :style="`height:calc(100% - ${showMenu ? 150 : 50}px)`">
-          <Table :columns="columns" :data="tableData" stripe></Table>
+          <Table :columns="columns" :data="tableData" stripe :loading="loading">
+            <template #loading>
+              <div>加载中</div>
+            </template>
+          </Table>
         </div>
       </div>
     </div>
@@ -63,11 +67,12 @@ const columns = ref<any>([]);
 const rackNoStr = ref<any>('');
 const tableData = ref<any>([]);
 const tooltipList = ref<any>([]);
-
+const loading = ref<boolean>(true);
 function getRackNo(rackNo: any) {
   rackNoStr.value = rackNo;
   initData();
 }
+
 function initData() {
   // 获取展示的定制列
   columns.value = [];
@@ -79,7 +84,7 @@ function initData() {
           const obj: any = {
             title: el.name,
             key: el.name,
-            minWidth: 60,
+            minWidth: getWidth(el.name),
             ellipsis: true,
             tooltip: true,
             resizable: true,
@@ -96,6 +101,7 @@ function initData() {
     if (res.data) {
       //   tableData.value = [...res.data.devList, ...res.data.devList, ...res.data.devList, ...res.data.devList];
       tableData.value = res.data.devList;
+      loading.value = false;
       prop.nowBox.list.forEach((item: any) => {
         tableData.value.forEach((el: any) => {
           if (item.id && item.id === el.id) {
@@ -117,12 +123,13 @@ function initData() {
 function showMenuRow() {
   showMenu.value = !showMenu.value;
 }
-// function closeMenuRow() {
-//   showMenu.value = !showMenu.value;
-// }
 function selectList() {
   const fnEditList: any = refDzList.value.editList;
   fnEditList();
+}
+function getWidth(name: string) {
+  let length: any = name.length;
+  return length * 25;
 }
 </script>
 <style lang="scss" scoped>
